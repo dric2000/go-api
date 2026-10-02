@@ -1,0 +1,16 @@
+# /etc/systemd/system/go-web.service
+[Unit]
+Description=GO web (Next.js)
+After=network.target
+
+[Service]
+User=ubuntu
+Restart=always
+RestartSec=5
+WorkingDirectory=/var/www/go-web
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm run start
+
+[Install]
+WantedBy=multi-user.target

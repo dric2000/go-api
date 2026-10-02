@@ -1,0 +1,15 @@
+# /etc/systemd/system/go-queue.service
+# Worker de file d'attente : exécute notamment ReleaseBookingFundsJob (déblocage des fonds à +24 h).
+[Unit]
+Description=GO API queue worker
+After=network.target mysql.service
+
+[Service]
+User=ubuntu
+Restart=always
+RestartSec=5
+WorkingDirectory=/var/www/go-api
+ExecStart=/usr/bin/php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+
+[Install]
+WantedBy=multi-user.target
